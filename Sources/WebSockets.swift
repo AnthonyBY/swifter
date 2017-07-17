@@ -169,9 +169,7 @@ public class WebSocketSession: Hashable, Equatable  {
         let finAndOpCode = UInt8(fin ? 0x80 : 0x00) | op.rawValue
         let maskAndLngth = encodeLengthAndMaskFlag(UInt64(data.count), false)
         do {
-            try self.socket.writeUInt8([finAndOpCode])
-            try self.socket.writeUInt8(maskAndLngth)
-            try self.socket.writeUInt8(data)
+            try self.socket.writeUInt8([finAndOpCode] + maskAndLngth + data)
         } catch {
             print(error)
         }

@@ -169,23 +169,23 @@ public class HttpServerIO {
     private func respond(_ socket: Socket, response: HttpResponse, keepAlive: Bool) throws -> Bool {
         guard self.operating else { return false }
 
-        try socket.writeUTF8("HTTP/1.1 \(response.statusCode()) \(response.reasonPhrase())\r\n")
+        var responseString = "HTTP/1.1 \(response.statusCode()) \(response.reasonPhrase())\r\n"
 
         let content = response.content()
 
         if content.length >= 0 {
-            try socket.writeUTF8("Content-Length: \(content.length)\r\n")
+            responseString += "Content-Length: \(content.length)\r\n"
         }
 
         if keepAlive && content.length != -1 {
-            try socket.writeUTF8("Connection: keep-alive\r\n")
+             responseString += "Connection: keep-alive\r\n"
         }
 
         for (name, value) in response.headers() {
-            try socket.writeUTF8("\(name): \(value)\r\n")
+             responseString += "\(name): \(value)\r\n"
         }
 
-        try socket.writeUTF8("\r\n")
+        try socket.writeUTF8("\(responseString)\r\n")
 
         if let writeClosure = content.write {
             let context = InnerWriteContext(socket: socket)
