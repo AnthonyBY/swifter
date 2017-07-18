@@ -12,7 +12,7 @@ do {
     
     server["/stomp"] = websocket({ (session, text) in
         for command in server.responseCommandJson {
-            if text.contains(command.key) {
+            if text == command.key {
                 for responseCommand in command.value {
                     session.writeFrame(ArraySlice(responseCommand.utf8), WebSocketSession.OpCode.text)
                 }
