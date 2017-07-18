@@ -8,10 +8,20 @@ import Foundation
 import Swifter
 
 do {
-    let server = demoServer(try String.File.currentWorkingDirectory())
-    server["/testAfterBaseRoute"] = { request in
-        return .ok(.html("ok !"))
-    }
+    let server = mockServer()
+    
+    server["/stomp"] = websocket({ (session, text) in
+        for command in server.responseCommandJson {
+            if text.contains(command.key) {
+                for responseCommand in command.value {
+                    session.writeFrame(ArraySlice(responseCommand.utf8), WebSocketSession.OpCode.text)
+                }
+            }
+        }
+    }, { (session, binary) in
+        session.writeBinary(binary)
+    })
+    
     
     if #available(OSXApplicationExtension 10.10, *) {
         try server.start(9080, forceIPv4: true)

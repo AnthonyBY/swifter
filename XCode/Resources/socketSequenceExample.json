@@ -1,0 +1,4 @@
+{
+    "CONNECT": ["CONNECTED\nversion:1.2\n\n\0^@"],
+    "SUBSCRIBE" : ["MESSAGE 1\n a^@", "MESSAGE 2\n a^@", "MESSAGE 3\n a^@"]
+}

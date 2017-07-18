@@ -105,6 +105,12 @@
 		7CEBB87D1D94612D00370A6B /* String+SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76B6F81D2C44F30030FC98 /* String+SHA1.swift */; };
 		7CEBB87E1D94612D00370A6B /* WebSockets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76B6F91D2C44F30030FC98 /* WebSockets.swift */; };
 		7CEBB87F1D94612D00370A6B /* Errno.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76B2A11D369C9D00D35BFB /* Errno.swift */; };
+		928915E31F1D2CB700D1699E /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928915E21F1D2CB700D1699E /* MockServer.swift */; };
+		928915E41F1D2CB700D1699E /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928915E21F1D2CB700D1699E /* MockServer.swift */; };
+		928915E51F1D2CB700D1699E /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928915E21F1D2CB700D1699E /* MockServer.swift */; };
+		928915EC1F1DF87300D1699E /* socketSequenceExample.json in Resources */ = {isa = PBXBuildFile; fileRef = 928915EB1F1DF87300D1699E /* socketSequenceExample.json */; };
+		928915ED1F1DF87300D1699E /* socketSequenceExample.json in Resources */ = {isa = PBXBuildFile; fileRef = 928915EB1F1DF87300D1699E /* socketSequenceExample.json */; };
+		928915EE1F1DF87300D1699E /* socketSequenceExample.json in Resources */ = {isa = PBXBuildFile; fileRef = 928915EB1F1DF87300D1699E /* socketSequenceExample.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -193,6 +199,8 @@
 		7CDAB80F1BE2A1D400C8A977 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7CDAB8101BE2A1D400C8A977 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CDAB8111BE2A1D400C8A977 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		928915E21F1D2CB700D1699E /* MockServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockServer.swift; sourceTree = "<group>"; };
+		928915EB1F1DF87300D1699E /* socketSequenceExample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = socketSequenceExample.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,6 +306,7 @@
 				7C76B6F91D2C44F30030FC98 /* WebSockets.swift */,
 				7C76B2A11D369C9D00D35BFB /* Errno.swift */,
 				7C377E161D964B6A009C6148 /* String+File.swift */,
+				928915E21F1D2CB700D1699E /* MockServer.swift */,
 			);
 			name = Sources;
 			path = ../Sources;
@@ -345,6 +354,7 @@
 		7CA4815619A2EF2B0030B30D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				928915EB1F1DF87300D1699E /* socketSequenceExample.json */,
 				7CB102DF1A17381D00CBA3B4 /* logo.png */,
 			);
 			path = Resources;
@@ -607,6 +617,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				928915EE1F1DF87300D1699E /* socketSequenceExample.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,6 +625,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				928915EC1F1DF87300D1699E /* socketSequenceExample.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -621,6 +633,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				928915ED1F1DF87300D1699E /* socketSequenceExample.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -672,6 +685,7 @@
 				2659FC1A1DADC077003F3930 /* String+File.swift in Sources */,
 				269B47961D3AAAE20042D137 /* HttpRouter.swift in Sources */,
 				269B47971D3AAAE20042D137 /* String+SHA1.swift in Sources */,
+				928915E51F1D2CB700D1699E /* MockServer.swift in Sources */,
 				7C458EFE1D4A7526006A68E5 /* Socket+Server.swift in Sources */,
 				269B47981D3AAAE20042D137 /* Errno.swift in Sources */,
 				269B47991D3AAAE20042D137 /* String+BASE64.swift in Sources */,
@@ -698,6 +712,7 @@
 				7C76B7111D2C45710030FC98 /* Files.swift in Sources */,
 				7C76B7191D2C457C0030FC98 /* HttpRouter.swift in Sources */,
 				7C76B7291D2C45920030FC98 /* String+SHA1.swift in Sources */,
+				928915E31F1D2CB700D1699E /* MockServer.swift in Sources */,
 				7C458EFC1D4A7526006A68E5 /* Socket+Server.swift in Sources */,
 				7C76B2A21D369C9D00D35BFB /* Errno.swift in Sources */,
 				7C76B7251D2C458C0030FC98 /* String+BASE64.swift in Sources */,
@@ -724,6 +739,7 @@
 				7C76B7121D2C45710030FC98 /* Files.swift in Sources */,
 				7C76B71A1D2C457C0030FC98 /* HttpRouter.swift in Sources */,
 				7C76B72A1D2C45920030FC98 /* String+SHA1.swift in Sources */,
+				928915E41F1D2CB700D1699E /* MockServer.swift in Sources */,
 				7C458EFD1D4A7526006A68E5 /* Socket+Server.swift in Sources */,
 				7C76B2A31D369C9D00D35BFB /* Errno.swift in Sources */,
 				7C76B7261D2C458D0030FC98 /* String+BASE64.swift in Sources */,

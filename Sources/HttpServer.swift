@@ -10,6 +10,7 @@ import Foundation
 public class HttpServer: HttpServerIO {
     
     public static let VERSION = "1.3.3"
+    public var responseCommandJson = [String: [String]]()
     
     private let router = HttpRouter()
     
