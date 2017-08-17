@@ -11,6 +11,7 @@ public class HttpServer: HttpServerIO {
     
     public static let VERSION = "1.3.3"
     public var responseCommandJson = [String: [String]]()
+    public var currentWebSocketSession : WebSocketSession?
     
     private let router = HttpRouter()
     

@@ -11,11 +11,6 @@ import Foundation
 public func mockServer() -> HttpServer {
     
     let server = HttpServer()
-    server["/stomp"] = websocket({ (session, text) in
-        session.writeText(text)
-    }, { (session, binary) in
-        session.writeBinary(binary)
-    })
     
     server.POST["/configure"] = { r in
         //Confgure JSON example handlers for mock socket server
@@ -39,7 +34,6 @@ public func mockServer() -> HttpServer {
         server.responseCommandJson = [String: [String]]()
         return HttpResponse.ok(.html(""))
     }
-    
     return server
 }
-   
+
