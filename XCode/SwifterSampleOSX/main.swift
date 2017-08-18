@@ -26,25 +26,36 @@ do {
     
     
     server.POST["/sendSequence"] = { r in
-        var responseMessage = "MESSAGE\nexpires:0\ndestination:/user/topic/DEVICE.B8BCA60F-37EC-485A-8832-BC275B710BA8\nsubscription:sub-0\npriority:4\nmessage-id:ID\\cip-172-16-179-96.eu-west-1.compute.internal-40273-1495614934523-5\\c1\\c-1\\c1\\c10674\ncontent-type:application/json;charset=UTF-8\ntimestamp:1500371504833\ncontent-length:64\n\n{\"messageType\":\"SubscriptionAccepted\",\"vin\":\"SALCA2AG0HH671076\"}"
         
-        if #available(OSXApplicationExtension 10.12, *) {
-            let timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { (timer) in
-                // do stuff 3 seconds later
-                 currentWebsocketSession.writeFrame(ArraySlice(responseMessage.utf8), WebSocketSession.OpCode.text)
+        do {
+            // let json : [[String:Any]] = [["message": "value1", "delay": 5], ["message": "value3", "delay": 10]]
+            let json = try JSONSerialization.jsonObject(with: Data(r.body), options: [])
+            if let object = json as? [[String:Any]] {
+                print(object)
+                for message in object {
+                    let delay = message["delay"] as! Int
+                    let responseMessage = message["message"] as! String
+                    
+                    let deadlineTime = DispatchTime.now() + .seconds(delay)
+                    DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+                        currentWebsocketSession.writeFrame(ArraySlice(responseMessage.utf8), WebSocketSession.OpCode.text)
+                        print("message - \(message)")
+                        print("timer fired after delay - \(delay)")
+                    }
+                }
+            } else {
+                return HttpResponse.badRequest(HttpResponseBody.text("Incorrect JSON format. Expected format: [String : [String]]"))
             }
+        } catch {
+            return HttpResponse.badRequest(HttpResponseBody.text(error.localizedDescription))
         }
         
         return HttpResponse.ok(.html(""))
     }
     
     
-    
-    
     if #available(OSXApplicationExtension 10.10, *) {
         try server.start(9080, forceIPv4: true)
-    } else {
-        // Fallback on earlier versions
     }
     
     print("Server has started ( port = \(try server.port()) ). Try to connect now...")

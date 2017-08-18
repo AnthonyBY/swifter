@@ -29,8 +29,7 @@ public func mockServer() -> HttpServer {
         return HttpResponse.ok(.html(""))
     }
     
-    server.GET["/reset"] = { r in
-        //Reset Response Settings
+    server.GET["/resetConfiguration"] = { r in
         server.responseCommandJson = [String: [String]]()
         return HttpResponse.ok(.html(""))
     }
