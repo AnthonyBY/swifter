@@ -25,63 +25,102 @@ func randomBaseUrlString() -> String {
 
 do {
     
-    let server = mockServer()
-    var currentWebsocketSession = WebSocketSession(Socket(socketFileDescriptor: 9080))
+    let httpServer = HttpServer()
     
-    server.GET["/setupWebsocketBaseUrl"] = { r in
+    httpServer.GET["/startSession"] = { r in
         do {
-            let randomString = randomBaseUrlString()
-           
-            server["/\(randomString)"] = websocket({ (session, text) in
-                print("text - \(text)")
-                currentWebsocketSession = session;
-                for command in server.responseCommandJson {
-                    if text == command.key {
-                        for responseCommand in command.value {
-                            session.writeFrame(ArraySlice(responseCommand.utf8), WebSocketSession.OpCode.text)
-                        }
-                    }
-                }
-            }, { (session, binary) in
-                session.writeBinary(binary)
-            })
-        return HttpResponse.ok(.text("ws://localhost:9080/\(randomString)"))
+            let randomToken = randomBaseUrlString()
+            startWebsocketSession(token: randomToken)
+            return HttpResponse.ok(.text(randomToken))
         }
     }
     
-    
-    server.POST["/sendSequence"] = { r in
-        do {
-            let json = try JSONSerialization.jsonObject(with: Data(r.body), options: [])
-            if let object = json as? [[String:Any]] {
-                print(object)
-                for message in object {
-                    let delay = message["delay"] as! Int
-                    let responseMessage = message["message"] as! String
-                    
-                    let deadlineTime = DispatchTime.now() + .seconds(delay)
-                    DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-                        currentWebsocketSession.writeFrame(ArraySlice(responseMessage.utf8), WebSocketSession.OpCode.text)
-                        print("message - \(message)")
-                        print("timer fired after delay - \(delay)")
+    func startWebsocketSession(token: String!) {
+        let stompServer = mockServer()
+        var currentWebsocketSession = WebSocketSession(Socket(socketFileDescriptor: 9090))
+        stompServer["/stomp?\(token!)"] = websocket({ (session, text) in
+            print("text - \(text)")
+            currentWebsocketSession = session;
+            for command in stompServer.responseCommandJson {
+                if text == command.key {
+                    for responseCommand in command.value {
+                        session.writeFrame(ArraySlice(responseCommand.utf8), WebSocketSession.OpCode.text)
                     }
                 }
-            } else {
-                return HttpResponse.badRequest(HttpResponseBody.text("Incorrect JSON format. Expected format: [String : [String]]"))
             }
-        } catch {
-            return HttpResponse.badRequest(HttpResponseBody.text(error.localizedDescription))
+        }, { (session, binary) in
+            session.writeBinary(binary)
+        })
+        
+        stompServer.POST["/configure?\(token!)"] = { r in
+            //Confgure JSON example handlers for mock socket server
+            do {
+                let json = try JSONSerialization.jsonObject(with: Data(r.body), options: [])
+                if let object = json as? [String: Any] {
+                    stompServer.responseCommandJson = object as! [String : [String]]
+                    print(object)
+                } else {
+                    return HttpResponse.badRequest(HttpResponseBody.text("Incorrect JSON format. Expected format: [String : [String]]"))
+                }
+            } catch {
+                return HttpResponse.badRequest(HttpResponseBody.text(error.localizedDescription))
+            }
+            
+            return HttpResponse.ok(.html(""))
         }
         
-        return HttpResponse.ok(.html(""))
+        stompServer.POST["/sendSequence?\(token!)"] = { r in
+            do {
+                let json = try JSONSerialization.jsonObject(with: Data(r.body), options: [])
+                if let object = json as? [[String:Any]] {
+                    print(object)
+                    for message in object {
+                        let delay = message["delay"] as! Int
+                        let responseMessage = message["message"] as! String
+                        
+                        let deadlineTime = DispatchTime.now() + .seconds(delay)
+                        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+                            currentWebsocketSession.writeFrame(ArraySlice(responseMessage.utf8), WebSocketSession.OpCode.text)
+                            print("message - \(message)")
+                            print("timer fired after delay - \(delay)")
+                        }
+                    }
+                } else {
+                    return HttpResponse.badRequest(HttpResponseBody.text("Incorrect JSON format. Expected format: [String : [String]]"))
+                }
+            } catch {
+                return HttpResponse.badRequest(HttpResponseBody.text(error.localizedDescription))
+            }
+            
+            return HttpResponse.ok(.html(""))
+        }
+        
+        stompServer.GET["/stopSession?\(token!)"] = { r in
+            stompServer.responseCommandJson = [String: [String]]()
+            return HttpResponse.ok(.html(""))
+        }
+        
+        if #available(OSXApplicationExtension 10.10, *) {
+            do {
+                print("WebSocket instanse for token - \(token) have been started")
+                try stompServer.start(9090, forceIPv4: true)
+            } catch {
+                print("Start server with token - \(token) have failed")
+            }
+        }
+        
+        let stopServerInTime = DispatchTime.now() + .seconds(180)
+        DispatchQueue.main.asyncAfter(deadline: stopServerInTime) {
+            print("Server with token - \(token) have been stopped")
+            stompServer.stop()
+        }
     }
-    
     
     if #available(OSXApplicationExtension 10.10, *) {
-        try server.start(9080, forceIPv4: true)
+        try httpServer.start(9080, forceIPv4: true)
     }
     
-    print("Server has started ( port = \(try server.port()) ). Try to connect now...")
+    print("HTTP Server has started ( port = \(try httpServer.port()) ). Try to connect now...")
     
     RunLoop.main.run()
     
