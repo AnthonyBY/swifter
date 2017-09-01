@@ -7,28 +7,51 @@
 import Foundation
 import Swifter
 
+func randomBaseUrlString() -> String {
+    
+    let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    let len = UInt32(letters.length)
+    
+    var randomString = ""
+    
+    for _ in 0 ..< 10 {
+        let rand = arc4random_uniform(len)
+        var nextChar = letters.character(at: Int(rand))
+        randomString += NSString(characters: &nextChar, length: 1) as String
+    }
+    
+    return randomString
+}
+
 do {
+    
     let server = mockServer()
     var currentWebsocketSession = WebSocketSession(Socket(socketFileDescriptor: 9080))
     
-    server["/stomp"] = websocket({ (session, text) in
-        currentWebsocketSession = session;
-        for command in server.responseCommandJson {
-            if text == command.key {
-                for responseCommand in command.value {
-                    session.writeFrame(ArraySlice(responseCommand.utf8), WebSocketSession.OpCode.text)
+    server.GET["/setupWebsocketBaseUrl"] = { r in
+        do {
+            let randomString = randomBaseUrlString()
+           
+            server["/\(randomString)"] = websocket({ (session, text) in
+                print("text - \(text)")
+                currentWebsocketSession = session;
+                for command in server.responseCommandJson {
+                    if text == command.key {
+                        for responseCommand in command.value {
+                            session.writeFrame(ArraySlice(responseCommand.utf8), WebSocketSession.OpCode.text)
+                        }
+                    }
                 }
-            }
+            }, { (session, binary) in
+                session.writeBinary(binary)
+            })
+        return HttpResponse.ok(.text("ws://localhost:9080/\(randomString)"))
         }
-    }, { (session, binary) in
-        session.writeBinary(binary)
-    })
+    }
     
     
     server.POST["/sendSequence"] = { r in
-        
         do {
-            // let json : [[String:Any]] = [["message": "value1", "delay": 5], ["message": "value3", "delay": 10]]
             let json = try JSONSerialization.jsonObject(with: Data(r.body), options: [])
             if let object = json as? [[String:Any]] {
                 print(object)
