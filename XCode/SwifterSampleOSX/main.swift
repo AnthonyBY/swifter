@@ -9,12 +9,12 @@ import Swifter
 
 func randomBaseUrlString() -> String {
     
-    let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    let letters : NSString = "0123456789"
     let len = UInt32(letters.length)
     
     var randomString = ""
     
-    for _ in 0 ..< 10 {
+    for _ in 0 ..< 7 {
         let rand = arc4random_uniform(len)
         var nextChar = letters.character(at: Int(rand))
         randomString += NSString(characters: &nextChar, length: 1) as String
@@ -40,6 +40,7 @@ do {
         var currentWebsocketSession = WebSocketSession(Socket(socketFileDescriptor: 9090))
         stompServer["/stomp?\(token!)"] = websocket({ (session, text) in
             print("text - \(text)")
+            
             currentWebsocketSession = session;
             for command in stompServer.responseCommandJson {
                 if text == command.key {
