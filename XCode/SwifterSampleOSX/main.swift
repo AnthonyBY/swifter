@@ -7,38 +7,28 @@
 import Foundation
 import Swifter
 
-func randomBaseUrlString() -> String {
-    
-    let letters : NSString = "0123456789"
-    let len = UInt32(letters.length)
-    
-    var randomString = ""
-    
-    for _ in 0 ..< 7 {
-        let rand = arc4random_uniform(len)
-        var nextChar = letters.character(at: Int(rand))
-        randomString += NSString(characters: &nextChar, length: 1) as String
-    }
-    
-    return randomString
-}
-
 do {
     
     let httpServer = HttpServer()
+    var openPorts : Set = [9080]
     
     httpServer.GET["/startSession"] = { r in
         do {
-            let randomToken = randomBaseUrlString()
-            startWebsocketSession(token: randomToken)
-            return HttpResponse.ok(.text(randomToken))
+            var randomPort : Int
+            repeat {
+                randomPort = Int(arc4random_uniform(8999) + 1000)
+            } while (openPorts.contains(randomPort));
+            openPorts.insert(randomPort)
+            
+            startWebsocketSession(port: randomPort)
+            return HttpResponse.ok(.text(String(randomPort)))
         }
     }
     
-    func startWebsocketSession(token: String!) {
+    func startWebsocketSession(port: Int) {
         let stompServer = mockServer()
-        var currentWebsocketSession = WebSocketSession(Socket(socketFileDescriptor: 9090))
-        stompServer["/stomp?\(token!)"] = websocket({ (session, text) in
+        var currentWebsocketSession = WebSocketSession(Socket(socketFileDescriptor: Int32(port)))
+        stompServer["/stomp"] = websocket({ (session, text) in
             print("text - \(text)")
             
             currentWebsocketSession = session;
@@ -53,7 +43,7 @@ do {
             session.writeBinary(binary)
         })
         
-        stompServer.POST["/configure?\(token!)"] = { r in
+        stompServer.POST["/configure"] = { r in
             //Confgure JSON example handlers for mock socket server
             do {
                 let json = try JSONSerialization.jsonObject(with: Data(r.body), options: [])
@@ -70,7 +60,7 @@ do {
             return HttpResponse.ok(.html(""))
         }
         
-        stompServer.POST["/sendSequence?\(token!)"] = { r in
+        stompServer.POST["/sendSequence"] = { r in
             do {
                 let json = try JSONSerialization.jsonObject(with: Data(r.body), options: [])
                 if let object = json as? [[String:Any]] {
@@ -96,23 +86,28 @@ do {
             return HttpResponse.ok(.html(""))
         }
         
-        stompServer.GET["/stopSession?\(token!)"] = { r in
-            stompServer.responseCommandJson = [String: [String]]()
+        stompServer.GET["/stopSession"] = { r in
+            stopMockInstance()
             return HttpResponse.ok(.html(""))
         }
         
         if #available(OSXApplicationExtension 10.10, *) {
             do {
-                print("WebSocket instanse for token - \(token) have been started")
-                try stompServer.start(9090, forceIPv4: true)
+                print("WebSocket instanse for port - \(port) have started")
+                try stompServer.start(in_port_t(port), forceIPv4: true)
             } catch {
-                print("Start server with token - \(token) have failed")
+                print("WebSocket instanse for port - \(port) have failed")
             }
         }
         
         let stopServerInTime = DispatchTime.now() + .seconds(180)
         DispatchQueue.main.asyncAfter(deadline: stopServerInTime) {
-            print("Server with token - \(token) have been stopped")
+            stopMockInstance()
+        }
+        
+        func stopMockInstance() {
+            print("Server with port - \(port) have been stopped")
+            openPorts.remove(port)
             stompServer.stop()
         }
     }
