@@ -112,11 +112,9 @@
 		7CEBB87D1D94612D00370A6B /* String+SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76B6F81D2C44F30030FC98 /* String+SHA1.swift */; };
 		7CEBB87E1D94612D00370A6B /* WebSockets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76B6F91D2C44F30030FC98 /* WebSockets.swift */; };
 		7CEBB87F1D94612D00370A6B /* Errno.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76B2A11D369C9D00D35BFB /* Errno.swift */; };
-		92FB16F8215B8EED00602067 /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FB16F7215B8EED00602067 /* MockServer.swift */; };
 		92FB16F9215B8F1700602067 /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FB16F7215B8EED00602067 /* MockServer.swift */; };
 		92FB16FA215B8F1800602067 /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FB16F7215B8EED00602067 /* MockServer.swift */; };
 		92FB16FD215B8F2B00602067 /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FB16F7215B8EED00602067 /* MockServer.swift */; };
-		92FB16FE215B8F2E00602067 /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FB16F7215B8EED00602067 /* MockServer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,7 +205,7 @@
 		7CDAB80F1BE2A1D400C8A977 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7CDAB8101BE2A1D400C8A977 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CDAB8111BE2A1D400C8A977 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		92FB16F7215B8EED00602067 /* MockServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServer.swift; sourceTree = "<group>"; };
+		92FB16F7215B8EED00602067 /* MockServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MockServer.swift; path = ../XCode/SwifterSampleOSX/MockServer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,6 +312,7 @@
 				7C76B2A11D369C9D00D35BFB /* Errno.swift */,
 				7C377E161D964B6A009C6148 /* String+File.swift */,
 				6AE2FF702048011A00302EC4 /* MimeTypes.swift */,
+				92FB16F7215B8EED00602067 /* MockServer.swift */,
 			);
 			name = Sources;
 			path = ../Sources;
@@ -353,7 +352,6 @@
 		7CA4813C19A2EA8D0030B30D /* SwifterSampleOSX */ = {
 			isa = PBXGroup;
 			children = (
-				92FB16F7215B8EED00602067 /* MockServer.swift */,
 				7CA4813D19A2EA8D0030B30D /* main.swift */,
 			);
 			path = SwifterSampleOSX;
@@ -758,7 +756,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92FB16FE215B8F2E00602067 /* MockServer.swift in Sources */,
 				7C73C6921C26179C00AEF6CA /* AppDelegate.swift in Sources */,
 				7CDAB8161BE2A1D400C8A977 /* ViewController.swift in Sources */,
 			);
@@ -768,7 +765,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92FB16F8215B8EED00602067 /* MockServer.swift in Sources */,
 				7CA4813E19A2EA8D0030B30D /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

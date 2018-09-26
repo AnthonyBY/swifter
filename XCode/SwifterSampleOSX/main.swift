@@ -29,8 +29,8 @@ do {
         let stompServer = mockServer()
         var currentWebsocketSession = WebSocketSession(Socket(socketFileDescriptor: Int32(port)))
         stompServer["/stomp"] = websocket({ (session, text) in
+            //TEXT
             print("text - \(text)")
-            
             currentWebsocketSession = session;
             for command in stompServer.responseCommandJson {
                 if text == command.key {
@@ -40,9 +40,12 @@ do {
                 }
             }
         }, { (session, binary) in
+            //BINARY
             session.writeBinary(binary)
+        }, { (session, binary) in
+            //PONG
         })
-        
+       
         stompServer.POST["/configure"] = { r in
             //Confgure JSON example handlers for mock socket server
             do {
