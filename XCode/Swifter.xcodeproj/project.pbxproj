@@ -84,7 +84,6 @@
 		7C76B72B1D2C45940030FC98 /* WebSockets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76B6F91D2C44F30030FC98 /* WebSockets.swift */; };
 		7C76B72C1D2C45950030FC98 /* WebSockets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76B6F91D2C44F30030FC98 /* WebSockets.swift */; };
 		7CA4813E19A2EA8D0030B30D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA4813D19A2EA8D0030B30D /* main.swift */; };
-		7CB102E01A17381D00CBA3B4 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB102DF1A17381D00CBA3B4 /* logo.png */; };
 		7CCB8C5E1D97B852008B9712 /* String+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C377E161D964B6A009C6148 /* String+File.swift */; };
 		7CCB8C621D97B8E9008B9712 /* SwifterTestsHttpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCB8C5F1D97B8CC008B9712 /* SwifterTestsHttpRouter.swift */; };
 		7CCD87611C66099B0068099B /* Swifter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AE893E71C05127900A29F63 /* Swifter.framework */; };
@@ -112,6 +111,10 @@
 		7CEBB87D1D94612D00370A6B /* String+SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76B6F81D2C44F30030FC98 /* String+SHA1.swift */; };
 		7CEBB87E1D94612D00370A6B /* WebSockets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76B6F91D2C44F30030FC98 /* WebSockets.swift */; };
 		7CEBB87F1D94612D00370A6B /* Errno.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76B2A11D369C9D00D35BFB /* Errno.swift */; };
+		92E4576E215B92F700A86676 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB102DF1A17381D00CBA3B4 /* logo.png */; };
+		92E4576F215B92FB00A86676 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB102DF1A17381D00CBA3B4 /* logo.png */; };
+		92E45770215B92FC00A86676 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB102DF1A17381D00CBA3B4 /* logo.png */; };
+		92E45771215B92FC00A86676 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB102DF1A17381D00CBA3B4 /* logo.png */; };
 		92FB16F9215B8F1700602067 /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FB16F7215B8EED00602067 /* MockServer.swift */; };
 		92FB16FA215B8F1800602067 /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FB16F7215B8EED00602067 /* MockServer.swift */; };
 		92FB16FD215B8F2B00602067 /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FB16F7215B8EED00602067 /* MockServer.swift */; };
@@ -623,6 +626,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92E45771215B92FC00A86676 /* logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,6 +634,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92E45770215B92FC00A86676 /* logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,6 +642,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92E4576F215B92FB00A86676 /* logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,8 +650,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92E4576E215B92F700A86676 /* logo.png in Resources */,
 				7AE8940D1C05151100A29F63 /* Launch Screen.storyboard in Resources */,
-				7CB102E01A17381D00CBA3B4 /* logo.png in Resources */,
 				7CDAB8141BE2A1D400C8A977 /* Images.xcassets in Resources */,
 				7CDAB8131BE2A1D400C8A977 /* Main.storyboard in Resources */,
 			);
